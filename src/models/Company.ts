@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type Company = {
@@ -31,7 +32,14 @@ export class CompanyModel {
   }
 
   async create(company: Company): Promise<Company> {
-    const { id, name, industry, description, email, password } = company;
+    const {
+      id = uuidv4(),
+      name,
+      industry,
+      description,
+      email,
+      password
+    } = company;
     try {
       const sql =
         'INSERT INTO companies (id, name, industry, description, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';

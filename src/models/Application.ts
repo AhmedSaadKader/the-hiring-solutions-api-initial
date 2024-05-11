@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { JobStatus } from './Job_status';
 import { connectionSQLResult } from './helpers/sql_query';
 
@@ -34,7 +35,7 @@ export class ApplicationModel {
 
   async create(application: Application): Promise<Application> {
     const {
-      id,
+      id = uuidv4(),
       application_id,
       employee_id,
       status,

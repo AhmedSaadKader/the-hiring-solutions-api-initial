@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type Skill = {
@@ -27,7 +28,7 @@ export class SkillModel {
   }
 
   async create(skill: Skill): Promise<Skill> {
-    const { id, name } = skill;
+    const { id = uuidv4(), name } = skill;
     try {
       const sql = 'INSERT INTO skills (id, name) VALUES ($1, $2) RETURNING *';
       const result = await connectionSQLResult(sql, [id, name]);
