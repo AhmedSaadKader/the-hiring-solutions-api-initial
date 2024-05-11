@@ -1,0 +1,4 @@
+CREATE TABLE skills (
+  skill_id INTEGER PRIMARY KEY,
+  name VARCHAR UNIQUE NOT NULL
+);
