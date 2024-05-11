@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "jasmine": "jasmine",
-    "test": "npm run build && npm run jasmine",
+    "test": "set ENV=test&& db-migrate db:drop item_store_test && db-migrate db:create item_store_test && db-migrate --env test up && npm run build && npm run jasmine && db-migrate db:drop item_store_test",
     "start": "nodemon src/index.ts",
     "build": "npx tsc",
-    "lint": "eslint src/*_/_.ts"
+    "watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
+    "createdb": "db-migrate db:create item_store",
+    "migrate": "db-migrate up",
+    "lint": "eslint src/*_/_.ts",
+    "prettier": "prettier --config .prettierrc --write src/**/*.ts"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +34,8 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "supertest": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
