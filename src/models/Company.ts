@@ -9,4 +9,14 @@ export type Company = {
   password: string;
 };
 
-export class CompanyModel {}
+export class CompanyModel {
+  async index(): Promise<Company[]> {
+    try {
+      const sql = 'SELECT * FROM companies';
+      const result = await connectionSQLResult(sql, []);
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not find companies. Error: ${err}`);
+    }
+  }
+}

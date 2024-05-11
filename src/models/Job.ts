@@ -12,4 +12,14 @@ export type Job = {
   status: JobStatus;
 };
 
-export class JobModel {}
+export class JobModel {
+  async index(): Promise<Job[]> {
+    try {
+      const sql = 'SELECT * FROM jobs';
+      const result = await connectionSQLResult(sql, []);
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not find jobs. Error: ${err}`);
+    }
+  }
+}

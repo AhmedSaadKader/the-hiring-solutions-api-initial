@@ -11,4 +11,14 @@ export type Application = {
   notes: string;
 };
 
-export class ApplicationModel {}
+export class ApplicationModel {
+  async index(): Promise<Application[]> {
+    try {
+      const sql = 'SELECT * FROM applications';
+      const result = await connectionSQLResult(sql, []);
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not find applications. Error: ${err}`);
+    }
+  }
+}

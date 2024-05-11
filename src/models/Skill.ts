@@ -5,4 +5,14 @@ export type Skill = {
   name: string;
 };
 
-export class SkillModel {}
+export class SkillModel {
+  async index(): Promise<Skill[]> {
+    try {
+      const sql = 'SELECT * FROM skills';
+      const result = await connectionSQLResult(sql, []);
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not find skills. Error: ${err}`);
+    }
+  }
+}
