@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "jasmine": "jasmine",
-    "test": "set ENV=test&& db-migrate db:drop item_store_test && db-migrate db:create item_store_test && db-migrate --env test up && npm run build && npm run jasmine && db-migrate db:drop item_store_test",
+    "test": "set ENV=test&& db-migrate db:drop hiring_solutions_test && db-migrate db:create hiring_solutions_test && db-migrate --env test up && npm run build && npm run jasmine && db-migrate db:drop hiring_solutions_test",
     "start": "nodemon src/index.ts",
     "build": "npx tsc",
-    "watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
-    "createdb": "db-migrate db:create item_store",
+    "watch": "tsc-watch --onSuccess \"node ./dist/index.js\"",
+    "createdb": "db-migrate db:create hiring_solutions",
     "migrate": "db-migrate up",
     "lint": "eslint src/*_/_.ts",
     "prettier": "prettier --config .prettierrc --write src/**/*.ts"

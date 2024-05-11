@@ -4,7 +4,6 @@ CREATE TABLE "employees" (
   "email" varchar UNIQUE NOT NULL,
   "password" varchar,
   "resume" varchar,
-  "skills" INTEGER REFERENCES skills(skill_id),
   "experience" integer,
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
