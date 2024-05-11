@@ -1,5 +1,5 @@
 CREATE TABLE recruiters (
-  "recruiter_id" integer PRIMARY KEY,
+  "id" integer PRIMARY KEY,
   "name" varchar NOT NULL,
   "email" varchar UNIQUE NOT NULL,
   "password" varchar,

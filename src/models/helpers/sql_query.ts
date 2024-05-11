@@ -1,8 +1,8 @@
-import client from '../database';
+import client from '../../database';
 
 export const connectionSQLResult = async (
   sqlQuery: string,
-  sqlParams: (string | number)[]
+  sqlParams: (string | number | Date)[]
 ) => {
   try {
     const conn = await client.connect();

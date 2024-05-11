@@ -1,5 +1,5 @@
 CREATE TABLE "companies" (
-  "company_id" integer PRIMARY KEY,
+  "id" integer PRIMARY KEY,
   "name" varchar NOT NULL,
   "industry" varchar,
   "description" varchar,
