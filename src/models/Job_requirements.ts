@@ -1,8 +1,8 @@
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type JobRequirement = {
-  skill_id: string;
-  job_id: string;
+  skill_id: number;
+  job_id: number;
 };
 
 export class JobRequirementModel {
@@ -16,7 +16,7 @@ export class JobRequirementModel {
     }
   }
 
-  async show(skill_id: string, job_id: string): Promise<JobRequirement> {
+  async show(skill_id: number, job_id: number): Promise<JobRequirement> {
     try {
       const sql =
         'SELECT * FROM job_requirements WHERE skill_id=($1) AND job_id=($2)';
@@ -27,7 +27,7 @@ export class JobRequirementModel {
     }
   }
 
-  async create(skill_id: string, job_id: string): Promise<JobRequirement> {
+  async create(skill_id: number, job_id: number): Promise<JobRequirement> {
     try {
       const sql =
         'INSERT INTO job_requirements (skill_id, job_id) VALUES ($1, $2) RETURNING *';
@@ -38,7 +38,7 @@ export class JobRequirementModel {
     }
   }
 
-  async delete(skill_id: string, job_id: string): Promise<undefined> {
+  async delete(skill_id: number, job_id: number): Promise<undefined> {
     try {
       const sql =
         'DELETE FROM job_requirements WHERE skill_id=($1) AND job_id=($2)';

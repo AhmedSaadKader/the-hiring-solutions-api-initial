@@ -2,7 +2,7 @@ import client from '../../database';
 
 export const connectionSQLResult = async (
   sqlQuery: string,
-  sqlParams: (string | number | Date)[]
+  sqlParams: (string | number | Date | undefined)[]
 ) => {
   try {
     const conn = await client.connect();

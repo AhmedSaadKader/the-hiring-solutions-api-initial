@@ -1,8 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type Recruiter = {
-  id: string;
+  id?: number;
   name: string;
   email: string;
   password: string;
@@ -19,7 +18,7 @@ export class RecruiterModel {
     }
   }
 
-  async show(id: string): Promise<Recruiter> {
+  async show(id: number): Promise<Recruiter> {
     try {
       const sql = 'SELECT * FROM recruiters WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -30,23 +29,18 @@ export class RecruiterModel {
   }
 
   async create(recruiter: Recruiter): Promise<Recruiter> {
-    const { id = uuidv4(), name, email, password } = recruiter;
+    const { name, email, password } = recruiter;
     try {
       const sql =
-        'INSERT INTO recruiters (id, name, email, password) VALUES ($1, $2, $3, $4) RETURNING *';
-      const result = await connectionSQLResult(sql, [
-        id,
-        name,
-        email,
-        password
-      ]);
+        'INSERT INTO recruiters (name, email, password) VALUES ($1, $2, $3) RETURNING *';
+      const result = await connectionSQLResult(sql, [name, email, password]);
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not create recruiter ${name}. Error: ${err}`);
     }
   }
 
-  async delete(id: string): Promise<undefined> {
+  async delete(id: number): Promise<undefined> {
     try {
       const sql = 'DELETE FROM recruiters WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -57,7 +51,7 @@ export class RecruiterModel {
   }
 
   async update(
-    id: string,
+    id: number,
     name: string,
     email: string,
     password: string

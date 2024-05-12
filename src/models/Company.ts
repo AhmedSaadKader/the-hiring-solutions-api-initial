@@ -1,8 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type Company = {
-  id: string;
+  id?: number;
   name: string;
   industry: string;
   description: string;
@@ -21,7 +20,7 @@ export class CompanyModel {
     }
   }
 
-  async show(id: string): Promise<Company> {
+  async show(id: number): Promise<Company> {
     try {
       const sql = 'SELECT * FROM companies WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -32,19 +31,11 @@ export class CompanyModel {
   }
 
   async create(company: Company): Promise<Company> {
-    const {
-      id = uuidv4(),
-      name,
-      industry,
-      description,
-      email,
-      password
-    } = company;
+    const { name, industry, description, email, password } = company;
     try {
       const sql =
-        'INSERT INTO companies (id, name, industry, description, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+        'INSERT INTO companies (name, industry, description, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *';
       const result = await connectionSQLResult(sql, [
-        id,
         name,
         industry,
         description,
@@ -57,7 +48,7 @@ export class CompanyModel {
     }
   }
 
-  async delete(id: string): Promise<undefined> {
+  async delete(id: number): Promise<undefined> {
     try {
       const sql = 'DELETE FROM companies WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -68,7 +59,7 @@ export class CompanyModel {
   }
 
   async update(
-    id: string,
+    id: number,
     name: string,
     industry: string,
     description: string,

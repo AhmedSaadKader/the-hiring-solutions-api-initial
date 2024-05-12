@@ -1,7 +1,7 @@
-CREATE TABLE employee_skills (
-  employee_id INTEGER,
+CREATE TABLE candidate_skills (
+  candidate_id INTEGER,
   skill_id INTEGER,
-  FOREIGN KEY (employee_id) REFERENCES employees(id),
+  FOREIGN KEY (candidate_id) REFERENCES candidates(id),
   FOREIGN KEY (skill_id) REFERENCES skills(id),
-  PRIMARY KEY (employee_id, skill_id)
+  PRIMARY KEY (candidate_id, skill_id)
 );

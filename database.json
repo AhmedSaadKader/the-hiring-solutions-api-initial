@@ -2,7 +2,7 @@
   "dev": {
     "driver": "pg",
     "host": "localhost",
-    "database": "hiring_solutions",
+    "database": "hiring_solutions_dev",
     "user": "postgres",
     "password": "ahmed89saad"
   },

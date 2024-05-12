@@ -1,9 +1,10 @@
 CREATE TABLE "applications" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "job_id" integer REFERENCES jobs(id),
-  "employee_id" integer REFERENCES employees(id),
+  "candidate_id" integer REFERENCES candidates(id),
+  "recruiter_id" integer REFERENCES recruiters(id),
   "status" job_status,
-  "applied_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  "reviewed_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  "applied_date" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  "reviewed_date" TIMESTAMP WITH TIME ZONE,
   "notes" varchar
 );

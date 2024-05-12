@@ -1,14 +1,14 @@
-import { v4 as uuidv4 } from 'uuid';
 import { JobStatus } from './Job_status';
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type Application = {
-  id: string;
-  application_id: string;
-  employee_id: string;
+  id?: number;
+  job_id: number;
+  candidate_id: number;
+  recruiter_id: number;
   status: JobStatus;
-  applied_date: Date;
-  reviewed_date: Date;
+  applied_date?: Date;
+  reviewed_date?: Date | null;
   notes: string;
 };
 
@@ -23,7 +23,7 @@ export class ApplicationModel {
     }
   }
 
-  async show(id: string): Promise<Application> {
+  async show(id: number): Promise<Application> {
     try {
       const sql = 'SELECT * FROM applications WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -34,34 +34,24 @@ export class ApplicationModel {
   }
 
   async create(application: Application): Promise<Application> {
-    const {
-      id = uuidv4(),
-      application_id,
-      employee_id,
-      status,
-      applied_date,
-      reviewed_date,
-      notes
-    } = application;
+    const { job_id, candidate_id, recruiter_id, status, notes } = application;
     try {
       const sql =
-        'INSERT INTO applications (id, application_id, employee_id, status, applied_date, reviewed_date, notes) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+        'INSERT INTO applications (job_id, candidate_id, recruiter_id, status, notes) VALUES ($1, $2, $3, $4, $5) RETURNING *';
       const result = await connectionSQLResult(sql, [
-        id,
-        application_id,
-        employee_id,
+        job_id,
+        candidate_id,
+        recruiter_id,
         status,
-        applied_date,
-        reviewed_date,
         notes
       ]);
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not create application ${id}. Error: ${err}`);
+      throw new Error(`Could not create application. Error: ${err}`);
     }
   }
 
-  async delete(id: string): Promise<undefined> {
+  async delete(id: number): Promise<undefined> {
     try {
       const sql = 'DELETE FROM applications WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -72,24 +62,26 @@ export class ApplicationModel {
   }
 
   async update(
-    id: string,
-    application_id: string,
-    employee_id: string,
+    id: number,
+    job_id: number,
+    candidate_id: number,
+    recruiter_id: number,
     status: JobStatus,
     applied_date: Date,
-    reviewed_date: Date,
-    notes: string
+    notes: string,
+    reviewed_date?: Date
   ): Promise<Application> {
     try {
       const sql =
-        'UPDATE applications SET application_id=($1), employee_id=($2), status=($3), applied_date=($4), reviewed_date=($5), notes=($6) WHERE id=($7) RETURNING *';
+        'UPDATE applications SET job_id=($1), candidate_id=($2), recruiter_id=($3), status=($4), applied_date=($5), notes=($6), reviewed_date=($7) WHERE id=($8) RETURNING *';
       const result = await connectionSQLResult(sql, [
-        application_id,
-        employee_id,
+        job_id,
+        candidate_id,
+        recruiter_id,
         status,
         applied_date,
-        reviewed_date,
         notes,
+        reviewed_date,
         id
       ]);
       return result.rows[0];

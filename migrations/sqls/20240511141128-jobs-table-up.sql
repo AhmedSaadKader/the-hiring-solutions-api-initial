@@ -1,11 +1,10 @@
 CREATE TABLE "jobs" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "company_id" integer REFERENCES companies(id),
   "title" varchar NOT NULL,
   "description" varchar,
-  "requirements" INTEGER REFERENCES skills(id),
   "salary" integer,
   "location" varchar,
-  "posted_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  "posted_date" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   "status" job_status
 );

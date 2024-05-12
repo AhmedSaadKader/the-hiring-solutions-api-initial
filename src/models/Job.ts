@@ -3,13 +3,13 @@ import { JobStatus } from './Job_status';
 import { connectionSQLResult } from './helpers/sql_query';
 
 export type Job = {
-  id: number;
+  id?: number;
   company_id: number;
   title: string;
   description: string;
   salary: number;
   location: string;
-  posted_date: Date;
+  posted_date?: Date;
   status: JobStatus;
 };
 
@@ -24,7 +24,7 @@ export class JobModel {
     }
   }
 
-  async show(id: string): Promise<Job> {
+  async show(id: number): Promise<Job> {
     try {
       const sql = 'SELECT * FROM jobs WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -35,27 +35,16 @@ export class JobModel {
   }
 
   async create(job: Job): Promise<Job> {
-    const {
-      id = uuidv4(),
-      company_id,
-      title,
-      description,
-      salary,
-      location,
-      posted_date,
-      status
-    } = job;
+    const { company_id, title, description, salary, location, status } = job;
     try {
       const sql =
-        'INSERT INTO jobs (id, company_id, title, description, salary, location, posted_date, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
+        'INSERT INTO jobs (company_id, title, description, salary, location, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
       const result = await connectionSQLResult(sql, [
-        id,
         company_id,
         title,
         description,
         salary,
         location,
-        posted_date,
         status
       ]);
       return result.rows[0];
@@ -64,7 +53,7 @@ export class JobModel {
     }
   }
 
-  async delete(id: string): Promise<undefined> {
+  async delete(id: number): Promise<undefined> {
     try {
       const sql = 'DELETE FROM jobs WHERE id=($1)';
       const result = await connectionSQLResult(sql, [id]);
@@ -75,25 +64,23 @@ export class JobModel {
   }
 
   async update(
-    id: string,
-    company_id: string,
+    id: number,
+    company_id: number,
     title: string,
     description: string,
     salary: number,
     location: string,
-    posted_date: Date,
     status: JobStatus
   ): Promise<Job> {
     try {
       const sql =
-        'UPDATE jobs SET company_id=($1), title=($2), description=($3), salary=($4), location=($5), posted_date=($6), status=($7) WHERE id=($8) RETURNING *';
+        'UPDATE jobs SET company_id=($1), title=($2), description=($3), salary=($4), location=($5), status=($6) WHERE id=($7) RETURNING *';
       const result = await connectionSQLResult(sql, [
         company_id,
         title,
         description,
         salary,
         location,
-        posted_date,
         status,
         id
       ]);

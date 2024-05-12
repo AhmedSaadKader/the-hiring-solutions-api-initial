@@ -5,13 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-const address = process.env.PORT || '0.0.0.0:3000';
+const port = process.env.PORT || '3001';
+const address = `localhost:${port}`;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.get('/', function (req, res) {
     res.send('Hello world!');
 });
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log(`starting app on: ${address}`);
 });
 exports.default = app;
