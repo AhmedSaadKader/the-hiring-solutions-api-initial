@@ -40,12 +40,12 @@ export const createCandidateSkill = async (
 ): Promise<void> => {
   const candidateSkillData = req.body;
   try {
-    if (!candidateSkillData.name) {
-      throw new Error('CandidateSkill name is required');
+    if (!candidateSkillData.skillId) {
+      throw new Error('CandidateSkill skillId is required');
     }
     const newCandidateSkill = await candidateSkill.create(
-      parseInt(req.params.candidateId),
-      parseInt(req.params.skillId)
+      parseInt(candidateSkillData.skillId),
+      parseInt(candidateSkillData.candidateId)
     );
     res.json(newCandidateSkill);
   } catch (error) {

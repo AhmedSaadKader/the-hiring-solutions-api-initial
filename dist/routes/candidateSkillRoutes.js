@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const jobRequirementsControllers_1 = require("../controllers/jobRequirementsControllers");
+const candidateSkillControllers_1 = require("../controllers/candidateSkillControllers");
 const router = (0, express_1.Router)();
-router.get('/', jobRequirementsControllers_1.getAllJobRequirements);
-router.get('/:candidateId/:skillId', jobRequirementsControllers_1.getJobRequirement);
-router.post('/', jobRequirementsControllers_1.createJobRequirement);
-router.delete('/:candidateId/:skillId', jobRequirementsControllers_1.deleteJobRequirement);
+router.get('/', candidateSkillControllers_1.getAllCandidateSkills);
+router.get('/:candidateId/:skillId', candidateSkillControllers_1.getCandidateSkill);
+router.post('/', candidateSkillControllers_1.createCandidateSkill);
+router.delete('/:candidateId/:skillId', candidateSkillControllers_1.deleteCandidateSkill);
 exports.default = router;
