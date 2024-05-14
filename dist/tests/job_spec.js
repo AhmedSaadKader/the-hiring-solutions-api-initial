@@ -46,8 +46,6 @@ describe('Job Model', () => {
         const createdJob = await job.show(job_id);
         createdPostedDate = createdJob.posted_date;
         const expectedPostedDate = new Date();
-        console.log('expectedPostedDate: ', expectedPostedDate);
-        console.log('createdPostedDate: ', createdPostedDate);
         const toleranceInSeconds = 20;
         const diffInSeconds = Math.abs((createdPostedDate.getTime() - expectedPostedDate.getTime()) / 1000);
         expect(diffInSeconds).toBeLessThanOrEqual(toleranceInSeconds);

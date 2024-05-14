@@ -38,7 +38,7 @@ class JobModel {
             return result.rows[0];
         }
         catch (err) {
-            throw new Error(`Could not create job ${name}. Error: ${err}`);
+            throw new Error(`Could not create job. Error: ${err}`);
         }
     }
     async delete(id) {
